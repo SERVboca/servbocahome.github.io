@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SERVboca</title>
+  <style>
+    body {
+      background-color: #001f3f;
+      color: white;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      font-family: 'Ultimate', sans-serif;
+      font-size: 2.5em;
+      background: linear-gradient(to right, #00c3ff, #ffffff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 14px;
+      text-align: left;
+      max-width: 700px;
+      margin-bottom: 30px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #00c3ff;
+      color: #001f3f;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    form input, form select {
+      display: block;
+      margin-bottom: 10px;
+      padding: 8px;
+      width: 100%;
+      max-width: 300px;
+    }
+
+    form {
+      margin-top: 20px;
+      margin-bottom: 40px;
+    }
+  </style>
+
+  <!-- Fonte Ultimate (substituta, pois Ultimate é fonte paga/não hospedada) -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
+  <style>
+    @font-face {
+      font-family: 'Ultimate';
+      src: local('Orbitron'), local('sans-serif');
+    }
+  </style>
+</head>
+<body>
+  <h1>SERVboca</h1>
+
+  <p>
+    Somos uma agência de serviços dedicada a conectar profissionais com clientes de forma rápida e segura.
+    Os trabalhadores se cadastram conosco informando suas habilidades, disponibilidade e dados básicos.
+    Quando alguém solicita um serviço pelo nosso Instagram, nossa equipe entra em ação: analisamos a necessidade,
+    fechamos o contrato e acionamos o trabalhador ideal para a tarefa. 
+    Nosso objetivo é facilitar o processo para todos, garantindo confiança e eficiência.
+  </p>
+
+  <button onclick="document.getElementById('cadastro').style.display='block'">Cadastrar trabalhador</button>
+
+  <form id="cadastro" style="display:none;">
+    <input type="text" name="nome" placeholder="Nome" required>
+    <input type="number" name="idade" placeholder="Idade" required>
+    <input type="text" name="foto" placeholder="URL da foto" required>
+    <input type="text" name="profissao" placeholder="Serviço/Profissão" required>
+    <select name="sexo" required>
+      <option value="">Sexo</option>
+      <option value="Masculino">Masculino</option>
+      <option value="Feminino">Feminino</option>
+    </select>
+    <input type="text" name="horario" placeholder="Horários disponíveis" required>
+    <input type="text" name="dias" placeholder="Dias disponíveis" required>
+    <button type="submit">Enviar cadastro</button>
+  </form>
+
+
+  <a href="https://www.instagram.com/servboca?igsh=ZnQzdTlpZnZ0Z2Zu" target="_blank">
+    <button>Visite nosso Instagram</button>
+  </a>
+
+  <script>
+    document.getElementById("cadastro").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const dados = {
+        nome: form.nome.value,
+        idade: form.idade.value,
+        foto: form.foto.value,
+        profissao: form.profissao.value,
+        sexo: form.sexo.value,
+        horario: form.horario.value,
+        dias: form.dias.value
+      };
+
+      fetch("https://script.google.com/macros/s/AKfycbwvYqDk9uT1gfQ5QrpmLjX9_Zfv_1_9OAtGg1uyw1E/exec", {
+        method: "POST",
+        body: JSON.stringify(dados),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+      .then(res => res.text())
+      .then(msg => {
+        alert("Cadastro enviado com sucesso!");
+        form.reset();
+        form.style.display = "none";
+      })
+      .catch(err => {
+        alert("Erro ao enviar cadastro: " + err.message);
+      });
+    });
+  </script>
+</body>
+</html>
